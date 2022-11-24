@@ -9,8 +9,8 @@ run();
 async function run() {
   try {
     const wubipinyinTree = new MyTrie();
-    await appendTree(wubipinyinTree, "./dict/wb_table.txt");
-    await appendTree(wubipinyinTree, "./dict/py_table.txt");
+    await appendTree(wubipinyinTree, "./dict/wb_table.txt", "wb_");
+    await appendTree(wubipinyinTree, "./dict/py_table.txt", "py_");
     await repl(function (key, type, page) {
       let results = searchTree(key, type, page);
       console.log("repl result:", results);
@@ -43,12 +43,15 @@ async function run() {
   }
 }
 
-async function appendTree(trie, dictfile) {
+async function appendTree(trie, dictfile, prefix) {
   await processLineByLine(dictfile, function (line) {
     if (!line) return;
     //   console.log('line:', line);
     const values = line.split(" ");
-    trie.addWord(values[0], values.slice(1));
+    trie.addWord(
+      values[0],
+      values.slice(1).map((temp) => prefix + temp)
+    );
   });
   //   return tree;
 }
