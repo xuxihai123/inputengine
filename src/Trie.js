@@ -13,6 +13,7 @@ module.exports = class Trie {
    * @return {Trie}
    */
   addWord(word, value) {
+    if (!value || value.length === 0) return;
     const characters = Array.from(word);
     let currentNode = this.head;
 
@@ -20,7 +21,13 @@ module.exports = class Trie {
       const isComplete = charIndex === characters.length - 1;
       currentNode = currentNode.addChild(characters[charIndex], isComplete);
       if (isComplete) {
-        currentNode.value = value;
+        if (currentNode.value) {
+          for (const item of value) {
+            currentNode.value.push(item);
+          }
+        } else {
+          currentNode.value = value;
+        }
       }
     }
 
@@ -95,7 +102,12 @@ module.exports = class Trie {
         let list = node.value;
         for (const val of list) {
           if (start >= offset) {
-            result.push({ key: word, value: val, paths: paths.join("") });
+            result.push({
+              index: start,
+              key: word,
+              value: val,
+              paths: paths.join(""),
+            });
           }
           start++;
           // resolved
