@@ -109,8 +109,11 @@ module.exports = class Trie {
         return;
       }
       var childrenKeys = node.suggestChildren();
-      for (const char of childrenKeys) {
+      var char;
+      for (var i = 97; i < 122; i++) {
+        char = String.fromCharCode(i);
         let child = node.getChild(char);
+        if (!child) continue;
         // do select
         paths.push(char);
         let ret = blacktrack(child, paths);
@@ -118,6 +121,15 @@ module.exports = class Trie {
         // undo select
         paths.pop();
       }
+      // for (const char of childrenKeys) {
+      //   let child = node.getChild(char);
+      //   // do select
+      //   paths.push(char);
+      //   let ret = blacktrack(child, paths);
+      //   if (ret) return true;
+      //   // undo select
+      //   paths.pop();
+      // }
     }
   }
   // 有问题搜索:如下：输入a or aa, 不能只拿一层，使用层序遍历
