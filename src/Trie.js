@@ -1,7 +1,7 @@
-const TrieNode = require('./TrieNode');
+const TrieNode = require("./TrieNode");
 
 // Character that we will use for trie tree root.
-const HEAD_CHARACTER = '*';
+const HEAD_CHARACTER = "*";
 
 module.exports = class Trie {
   constructor() {
@@ -18,11 +18,10 @@ module.exports = class Trie {
 
     for (let charIndex = 0; charIndex < characters.length; charIndex += 1) {
       const isComplete = charIndex === characters.length - 1;
-      currentNode = currentNode.addChild(
-        characters[charIndex],
-        isComplete,
-        value
-      );
+      currentNode = currentNode.addChild(characters[charIndex], isComplete);
+      if (isComplete) {
+        currentNode.value = value;
+      }
     }
 
     return this;
@@ -72,7 +71,7 @@ module.exports = class Trie {
     if (!lastNode) {
       return [];
     }
-    if (type === 'dfs') {
+    if (type === "dfs") {
       return this.dfsQuery(lastNode, word, offset, limit);
     } else {
       return this.bfsQuery(lastNode, word, offset, limit);
@@ -96,7 +95,7 @@ module.exports = class Trie {
         let list = node.value;
         for (const val of list) {
           if (start >= offset) {
-            result.push({ key: word, value: val, paths: paths.join('') });
+            result.push({ key: word, value: val, paths: paths.join("") });
           }
           start++;
           // resolved
@@ -139,7 +138,7 @@ module.exports = class Trie {
     if (startNode.vlaue) {
       let list = startNode.vlaue;
       for (const item of list) {
-        result.push({ key: word, value: item, paths: '' });
+        result.push({ key: word, value: item, paths: "" });
       }
     }
     let char;

@@ -3,10 +3,10 @@ module.exports = class TrieNode {
    * @param {string} character
    * @param {boolean} isCompleteWord
    */
-  constructor(character, isCompleteWord = false, value) {
+  constructor(character, isCompleteWord = false) {
     this.character = character;
     this.isCompleteWord = isCompleteWord;
-    this.value = value;
+    // this.value = []; unset ,  Reduce memory
     this.children = new Map();
   }
 
@@ -23,19 +23,15 @@ module.exports = class TrieNode {
    * @param {boolean} isCompleteWord
    * @return {TrieNode}
    */
-  addChild(character, isCompleteWord = false, value) {
+  addChild(character, isCompleteWord = false) {
     if (!this.children.has(character)) {
-      this.children.set(
-        character,
-        new TrieNode(character, isCompleteWord, value)
-      );
+      this.children.set(character, new TrieNode(character, isCompleteWord));
     }
 
     const childNode = this.children.get(character);
 
     // In cases similar to adding "car" after "carpet" we need to mark "r" character as complete.
     childNode.isCompleteWord = childNode.isCompleteWord || isCompleteWord;
-
     return childNode;
   }
 
@@ -84,8 +80,8 @@ module.exports = class TrieNode {
    */
   toString() {
     let childrenAsString = this.suggestChildren().toString();
-    childrenAsString = childrenAsString ? `:${childrenAsString}` : '';
-    const isCompleteString = this.isCompleteWord ? '*' : '';
+    childrenAsString = childrenAsString ? `:${childrenAsString}` : "";
+    const isCompleteString = this.isCompleteWord ? "*" : "";
 
     return `${this.character}${isCompleteString}${childrenAsString}`;
   }
