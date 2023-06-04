@@ -1,5 +1,7 @@
 ## input method server
 
+基于前缀树实现的输入法搜索服务
+
 ```sh
 λ ~/oschina/inputengine/ main node test.js
 ready> :a:1
