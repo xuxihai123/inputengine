@@ -22,6 +22,10 @@ async function run() {
       console.log(`page:${page},size:${pageSize}`);
       let offset = (page - 1) * pageSize;
       var result1 = wubipinyinTree.querySuggest(word, type, offset, pageSize);
+      result1.forEach((temp) => {
+        temp.type = temp.value.replace(/^(py|wb)_.*$/, "$1");
+        temp.value = temp.value.replace(/^.._/, "");
+      });
       return result1;
       var result2 = pinyinTree.querySuggest(word, type, offset, pageSize);
       // if (result1.length >= pageSize) {
