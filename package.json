@@ -1,0 +1,16 @@
+{
+  "name": "inputengine",
+  "version": "1.0.0",
+  "description": "基于前缀树实现的输入法搜索服务",
+  "main": "buildDictTrie.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:xuxihai123/inputengine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
