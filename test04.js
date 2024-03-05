@@ -9,8 +9,10 @@ async function run() {
   try {
     const start =Date.now();
     const str = fs.readFileSync('./tries.json','utf8');
+    console.log('load trie data===',Date.now()-start,'ms');
+    const start2= Date.now();
     const trie = MyTrie.decode(str);
-    console.log('parse trie data===',Date.now()-start,'ms');
+    console.log('parse trie data===',Date.now()-start2,'ms');
     await utils.replDemo(function (key, page) {
       page = page || 1;
       let pageSize =  9;

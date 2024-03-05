@@ -1,22 +1,13 @@
-class TreeNode {
-  constructor(uchar) {
-    // this.uchar = uchar;
-    this._d = [];
-    this._l = {};
-    // this.isWord = 0;
-  }
-}
-
 class Trie {
   constructor() {
-    this.root = new TreeNode("*");
+    this.root = { _l: {}, _d: [] };
   }
   insert(word, val) {
     let cnode = this.root;
     for (var i = 0; i < word.length; i++) {
       let char = word[i];
       if (!cnode._l[char]) {
-        cnode._l[char] = new TreeNode(char);
+        cnode._l[char] = { _l: {}, _d: [] };
       }
       cnode = cnode._l[char];
     }
@@ -108,21 +99,10 @@ class Trie {
     return JSON.stringify(this.root);
   }
   static decode(str) {
-    const obj = JSON.parse(str);
-    const root = new TreeNode("*");
-    travseJsonObj(root, obj);
+    const root = JSON.parse(str);
     const trie = new Trie();
     trie.root = root;
     return trie;
-    function travseJsonObj(cnode, jsonObj) {
-      cnode._d=jsonObj._d;
-      Object.keys(jsonObj._l).forEach((key) => {
-        const childdata = jsonObj._l[key];
-        const node = new TreeNode();
-        cnode._l[key] = node;
-        travseJsonObj(node, childdata);
-      });
-    }
   }
 }
 
