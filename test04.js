@@ -7,15 +7,10 @@ run();
 async function run() {
   
   try {
-    const trie = new MyTrie();
-    const insert = (prefix,key, values) => {
-      values.forEach((val) => trie.insert(key, prefix+val));
-    };
-    await utils.parseDictLine("./dict/user_table.txt", insert.bind(null,'us_'));
-    await utils.parseDictLine("./dict/sp_table.txt", insert.bind(null,'sp_'));
-    await utils.parseDictLine("./dict/wb_table.txt", insert.bind(null,'wb_'));
-    await utils.parseDictLine("./dict/py_table.txt", insert.bind(null,'py_'));
-    require('fs').writeFileSync('tries.json',trie.encode());
+    const start =Date.now();
+    const str = fs.readFileSync('./tries.json','utf8');
+    const trie = MyTrie.decode(str);
+    console.log('parse trie data===',Date.now()-start,'ms');
     await utils.replDemo(function (key, page) {
       page = page || 1;
       let pageSize =  9;
